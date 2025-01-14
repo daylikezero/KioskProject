@@ -42,16 +42,16 @@ public class Main {
             // 숫자를 입력 받기
             MenuItem select;
             // 입력한 숫자에 따른 처리
-            switch (sc.nextInt()) {
-                case 0 -> {
+            switch (sc.next()) {
+                case "0" -> {
                     // 프로그램을 종료
                     System.out.println("프로그램을 종료합니다.");
                     return;
                 }
-                case 1 -> select = menuItems.get(0);
-                case 2 -> select = menuItems.get(1);
-                case 3 -> select = menuItems.get(2);
-                case 4 -> select = menuItems.get(3);
+                case "1" -> select = menuItems.get(0);
+                case "2" -> select = menuItems.get(1);
+                case "3" -> select = menuItems.get(2);
+                case "4" -> select = menuItems.get(3);
                 default -> {
                     System.out.println("잘못된 입력입니다.");
                     continue;
