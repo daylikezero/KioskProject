@@ -14,7 +14,6 @@ public class Cart {
         } else {
             cartItems.put(item, 1);
         }
-        System.out.println(item.getName() + " 이 장바구니에 추가되었습니다.");
     }
 
     // 장바구니 출력
@@ -43,5 +42,12 @@ public class Cart {
     // 빈 장바구니 여부
     public boolean isEmpty() {
         return cartItems.isEmpty();
+    }
+
+    public void orders() {
+    }
+
+    public void cancel() {
+
     }
 }

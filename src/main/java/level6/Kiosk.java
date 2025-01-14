@@ -1,6 +1,7 @@
 package level6;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Kiosk {
@@ -23,7 +24,7 @@ public class Kiosk {
                 // 숫자 입력 받기
                 // 입력 받은 숫자가 올바르다면 인덱스로 활용하여 List에 접근하기
                 // List<Menu>에 인덱스로 접근하면 Menu만 추출할 수 있겠죠?
-                selectMain(sc.next());
+                selectMain(sc.next(), cart);
             } catch (IllegalStateException e) {
                 // 유효하지 않은 입력에 대해 오류메세지를 출력합니다.
                 System.out.println("[입력 오류] " + e.getMessage());
@@ -36,6 +37,9 @@ public class Kiosk {
 
     // 상위 메뉴 출력 메서드
     private void printMain(Cart cart) {
+        if(!cart.isEmpty()) {
+            System.out.println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n");
+        }
         System.out.println("[ MAIN MENU ]");
         for (int i = 0; i < menuList.size(); i++) {
             System.out.println(i + 1 + ". " + menuList.get(i).getCategoryName());
@@ -45,30 +49,54 @@ public class Kiosk {
         // 장바구니에 물건이 들어 있으면 아래와 같이 [ ORDER MENU ] 가 추가로 출력됩니다.
         // 만약에 장바구니에 물건이 들어 있지 않다면 [ ORDER MENU ] 가 출력되지 않습니다.
         // 미출력일 때 4,5 번을 누르면 예외를 던저줘야 합니다.
-        if(!cart.isEmpty()) {
-            System.out.println("[ ORDER MENU ]");
-            System.out.printf("4. %-7s | %s%n", "Orders", "장바구니를 확인 후 주문합니다.");
-            System.out.printf("5. %-7s | %s%n", "Cancel", "진행중인 주문을 취소합니다.");
+        if (!cart.isEmpty()) {
+            System.out.println("\n[ ORDER MENU ]");
+            System.out.printf("4. %-8s | %s%n", "Orders", "장바구니를 확인 후 주문합니다.");
+            System.out.printf("5. %-8s | %s%n", "Cancel", "진행중인 주문을 취소합니다.");
         }
     }
 
     // 상위 메뉴 선택 메서드
-    private void selectMain(String menuIndex) {
-        switch (menuIndex) {
-            case "0" -> {
-                // 0을 입력하면 프로그램이 '뒤로가기' 되거나 '종료'됩니다.
-                System.out.println("프로그램을 종료합니다.");
-                System.exit(0);
+    private void selectMain(String menuIndex, Cart cart) {
+        Menu menu = null;
+        if (cart.isEmpty()) {
+            switch (menuIndex) {
+                case "0" -> {
+                    // 0을 입력하면 프로그램이 '뒤로가기' 되거나 '종료'됩니다.
+                    System.out.println("프로그램을 종료합니다.");
+                    System.exit(0);
+                }
+                case "1" -> menu = menuList.get(0);
+                case "2" -> menu = menuList.get(1);
+                case "3" -> menu = menuList.get(2);
+                default -> throw new IllegalStateException("유효하지 않은 입력입니다. : " + menuIndex);
             }
-            case "1" -> selectMenu(menuList.get(0));
-            case "2" -> selectMenu(menuList.get(1));
-            case "3" -> selectMenu(menuList.get(2));
-            default -> throw new IllegalStateException("유효하지 않은 입력입니다. : " + menuIndex);
+        } else {
+            switch (menuIndex) {
+                case "0" -> {
+                    // 0을 입력하면 프로그램이 '뒤로가기' 되거나 '종료'됩니다.
+                    System.out.println("프로그램을 종료합니다.");
+                    System.exit(0);
+                }
+                case "1" -> menu = menuList.get(0);
+                case "2" -> menu = menuList.get(1);
+                case "3" -> menu = menuList.get(2);
+                case "4" -> {
+                    cart.orders();
+                    return;
+                }
+                case "5" -> {
+                    cart.cancel();
+                    return;
+                }
+                default -> throw new IllegalStateException("유효하지 않은 입력입니다. : " + menuIndex);
+            }
         }
+        selectMenu(menu, cart);
     }
 
     // 하위 메뉴
-    private void selectMenu(Menu menu) {
+    private void selectMenu(Menu menu, Cart cart) {
         Scanner sc = new Scanner(System.in);
         while (true) {
             try {
@@ -76,9 +104,14 @@ public class Kiosk {
                 menu.printSub();
                 // 숫자 입력 받기
                 // 입력 받은 숫자가 올바르다면 인덱스로 활용해서 Menu가 가지고 있는 List<MenuItem>에 접근하기
-                if (menu.selectItem(sc.next())) {
-                    return; // 선택 반환값 true: 반복문 종료
+                Optional<MenuItem> selectItem = menu.selectItem(sc.next());
+                if (selectItem.isEmpty()) {
+                    return;
                 }
+                System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
+                System.out.printf("1. %-8s 2. %s%n", "확인", "취소");
+                confirmAdd(sc.next(), cart, selectItem.get());
+
             } catch (IllegalStateException e) {
                 // 유효하지 않은 입력에 대해 오류메세지를 출력합니다.
                 System.out.println("[입력 오류] " + e.getMessage());
@@ -86,6 +119,17 @@ public class Kiosk {
                 System.out.println("[알 수 없는 오류] " + e.getMessage());
                 e.printStackTrace(System.out);
             }
+        }
+    }
+
+    private void confirmAdd(String input, Cart cart, MenuItem item) {
+        if (input.equals("1")) {
+            cart.addItem(item);
+            System.out.println(item.getName() + " 이 장바구니에 추가되었습니다. ");
+        } else if (input.equals("2")) {
+            System.out.println("메뉴판으로 돌아갑니다.");
+        } else {
+            throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
         }
     }
 }
