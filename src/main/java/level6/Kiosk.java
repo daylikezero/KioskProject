@@ -108,7 +108,7 @@ public class Kiosk {
                 if (selectItem.isEmpty()) {
                     return;
                 }
-                System.out.printf("%n%s", selectItem.get());
+                System.out.printf("%n%s%n", selectItem.get());
                 System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
                 System.out.printf("1. %-8s 2. %s%n", "확인", "취소");
                 confirmAdd(sc.next(), cart, selectItem.get());
