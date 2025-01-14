@@ -32,20 +32,20 @@ public class Main {
             // 입력
             // 제시 된 메뉴 중 입력받은 숫자에 따라 다른 로직을 실행하는 코드를 작성합니다.
             String select;
-            switch (sc.nextInt()) {
-                case 1:
+            switch (sc.next()) {
+                case "1":
                     select = menu[0];
                     break;
-                case 2:
+                case "2":
                     select = menu[1];
                     break;
-                case 3:
+                case "3":
                     select = menu[2];
                     break;
-                case 4:
+                case "4":
                     select = menu[3];
                     break;
-                case 0:
+                case "0":
                     // 반복문을 이용해서 특정 번호가 입력되면 프로그램을 종료합니다.
                     System.out.println("프로그램을 종료합니다.");
                     return;
