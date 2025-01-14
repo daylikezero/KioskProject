@@ -1,5 +1,6 @@
 package level6;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,10 +29,10 @@ public class Cart {
     }
 
     // 장바구니 총 금액
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return cartItems.entrySet().stream()
-                .mapToDouble(i -> i.getKey().getPrice() * i.getValue())
-                .sum();
+                .map(i -> BigDecimal.valueOf(i.getKey().getPrice() * i.getValue()))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     // 장바구니 비우기
@@ -43,11 +44,5 @@ public class Cart {
     public boolean isEmpty() {
         return cartItems.isEmpty();
     }
-
-    public void orders() {
-    }
-
-    public void cancel() {
-
-    }
 }
+
