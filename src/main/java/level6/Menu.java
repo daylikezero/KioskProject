@@ -3,6 +3,7 @@ package level6;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * MenuItem 클래스를 관리하는 클래스
@@ -40,15 +41,15 @@ public class Menu {
     }
 
     // menuItem 선택 메서드
-    public boolean selectItem(String itemIndex) {
+    public Optional<MenuItem> selectItem(String itemIndex) {
         if ("0".equals(itemIndex)) {
-            return true; // 뒤로가기
+            return Optional.empty(); // 뒤로가기
         }
         try {
             for (int i = 0; i < menuItems.size(); i++) {
                 if (i == Integer.parseInt(itemIndex) - 1) {
                     printItem(menuItems.get(i));
-                    return false;
+                    return Optional.of(menuItems.get(i));
                 }
             }
         } catch (NumberFormatException e) {
