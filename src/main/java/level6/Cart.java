@@ -22,13 +22,11 @@ public class Cart {
 
     // 장바구니 출력
     private void printCart() {
-        for (Map.Entry<MenuItem, Integer> entry : cartItems.entrySet()) {
-            MenuItem item = entry.getKey();
-            String name = item.getName();
-            BigDecimal price = BigDecimal.valueOf(entry.getValue() * item.getPrice());
-            String description = item.getDescription();
-            System.out.printf("%-21s | W %.1f | %s%n", name, price, description);
-        }
+        // Map의 경우 stream을 사용하지 않고 Map.forEach((K,V))로 entry를 순회할 수 있다.
+        cartItems.forEach((key, value) -> System.out.printf("%-21s | W %4.1f | %s%n",
+                key.getName(),
+                BigDecimal.valueOf(value * key.getPrice()),
+                key.getDescription()));
     }
 
     // 장바구니 총 금액
@@ -87,7 +85,7 @@ public class Cart {
         Scanner sc = new Scanner(System.in);
         System.out.println("\n할인 정보를 입력해주세요.");
         for (int i = 0; i < UserType.values().length; i++) {
-            System.out.printf(i + 1 + ". %-6s: %3d%%%n"
+            System.out.printf(i + 1 + ". %-6s : %3d%%%n"
                     , UserType.values()[i].getDefinition()
                     , UserType.values()[i].getDiscountPercent());
         }
