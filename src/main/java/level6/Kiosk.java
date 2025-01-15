@@ -38,7 +38,7 @@ public class Kiosk {
     // 상위 메뉴 출력 메서드
     private void printMain(Cart cart) {
         if (!cart.isEmpty()) {
-            System.out.println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n");
+            System.out.println("\n아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n");
         }
         System.out.println("[ MAIN MENU ]");
         for (int i = 0; i < menuList.size(); i++) {
@@ -53,6 +53,7 @@ public class Kiosk {
             System.out.println("\n[ ORDER MENU ]");
             System.out.printf("4. %-8s | %s%n", "Orders", "장바구니를 확인 후 주문합니다.");
             System.out.printf("5. %-8s | %s%n", "Cancel", "진행중인 주문을 취소합니다.");
+            System.out.printf("6. %-8s | %s%n", "Remove", "장바구니에서 특정 메뉴를 삭제합니다.");
         }
     }
 
@@ -87,6 +88,10 @@ public class Kiosk {
                 }
                 case "5" -> {
                     cart.cancel();
+                    return;
+                }
+                case "6" -> {
+                    cart.remove();
                     return;
                 }
                 default -> throw new IllegalStateException("유효하지 않은 입력입니다. : " + menuIndex);
