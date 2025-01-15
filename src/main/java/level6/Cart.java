@@ -2,6 +2,7 @@ package level6;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -20,7 +21,13 @@ public class Cart {
 
     // 장바구니 출력
     private void printCart() {
-        for (Map.Entry<MenuItem, Integer> entry : cartItems.entrySet()) {
+        // 주문 목록 출력 시 메뉴명 오름차순 정렬
+        List<Map.Entry<MenuItem, Integer>> entryList = cartItems.entrySet()
+                .stream()
+                .sorted(Map.Entry.<MenuItem, Integer>comparingByKey())
+                .toList();
+
+        for (Map.Entry<MenuItem, Integer> entry : entryList) {
             MenuItem item = entry.getKey();
             String name = item.getName();
             double price = entry.getValue() * item.getPrice();
