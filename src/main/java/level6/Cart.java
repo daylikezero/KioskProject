@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static level6.UserType.*;
+
 public class Cart {
     // menuItem(메뉴명, 가격정보)과 수량을 저장
     final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();
@@ -71,13 +73,32 @@ public class Cart {
         System.out.printf("1. %-8s 2. %s%n", "주문", "메뉴판");
         String input = sc.next();
         if ("1".equals(input)) {
-            System.out.println("주문이 완료되었습니다. 금액은 W " + getTotalPrice() + " 입니다. \n");
+            BigDecimal discountPrice = selectDiscount(getTotalPrice());
+            System.out.println("주문이 완료되었습니다. 금액은 W " + discountPrice + " 입니다. \n");
             clearCart();
         } else if ("2".equals(input)) {
             System.out.println("메뉴판으로 돌아갑니다.");
         } else {
             throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
         }
+    }
+
+    private BigDecimal selectDiscount(BigDecimal totalPrice) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n할인 정보를 입력해주세요.");
+        for (int i = 0; i < UserType.values().length; i++) {
+            System.out.printf(i + 1 + ". %-6s: %3d%%%n"
+                    , UserType.values()[i].getDefinition()
+                    , UserType.values()[i].getDiscountPercent());
+        }
+        String input = sc.next();
+        return switch (input) {
+            case "1" -> VETERAN.discount(totalPrice);
+            case "2" -> SOLDIER.discount(totalPrice);
+            case "3" -> STUDENT.discount(totalPrice);
+            case "4" -> COMMON.discount(totalPrice);
+            default -> throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
+        };
     }
 
     // 장바구니 진행 주문 취소
