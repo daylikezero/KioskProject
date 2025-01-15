@@ -37,7 +37,7 @@ public class Kiosk {
 
     // 상위 메뉴 출력 메서드
     private void printMain(Cart cart) {
-        if(!cart.isEmpty()) {
+        if (!cart.isEmpty()) {
             System.out.println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n");
         }
         System.out.println("[ MAIN MENU ]");
@@ -82,11 +82,11 @@ public class Kiosk {
                 case "2" -> menu = menuList.get(1);
                 case "3" -> menu = menuList.get(2);
                 case "4" -> {
-                    orders(cart);
+                    cart.orders();
                     return;
                 }
                 case "5" -> {
-                    cancel(cart);
+                    cart.cancel();
                     return;
                 }
                 default -> throw new IllegalStateException("유효하지 않은 입력입니다. : " + menuIndex);
@@ -111,7 +111,7 @@ public class Kiosk {
                 System.out.printf("%n%s%n", selectItem.get());
                 System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
                 System.out.printf("1. %-8s 2. %s%n", "확인", "취소");
-                confirmAdd(sc.next(), cart, selectItem.get());
+                cart.confirmAdd(sc.next(), selectItem.get());
 
             } catch (IllegalStateException e) {
                 // 유효하지 않은 입력에 대해 오류메세지를 출력합니다.
@@ -120,53 +120,6 @@ public class Kiosk {
                 System.out.println("[알 수 없는 오류] " + e.getMessage());
                 e.printStackTrace(System.out);
             }
-        }
-    }
-
-    private void confirmAdd(String input, Cart cart, MenuItem item) {
-        if ("1".equals(input)) {
-            cart.addItem(item);
-            System.out.println(item.getName() + " 이 장바구니에 추가되었습니다.\n");
-        } else if ("2".equals(input)) {
-            System.out.println("이전 메뉴로 돌아갑니다.");
-        } else {
-            throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
-        }
-    }
-
-    private void orders(Cart cart) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("아래와 같이 주문하시겠습니까?");
-        System.out.println("\n[ Orders ]");
-        cart.printCart();
-
-        System.out.println("\n[ Total ]");
-        System.out.println("W " + cart.getTotalPrice() + "\n");
-
-        System.out.printf("1. %-8s 2. %s%n", "주문", "메뉴판");
-        String input = sc.next();
-        if ("1".equals(input)) {
-            System.out.println("주문이 완료되었습니다. 금액은 W " + cart.getTotalPrice() + " 입니다. \n" );
-            cart.clearCart();
-        } else if ("2".equals(input)) {
-            System.out.println("메뉴판으로 돌아갑니다.");
-        } else {
-            throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
-        }
-    }
-
-    private void cancel(Cart cart) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("진행중인 주문을 취소하시겠습니까? (장바구니의 모든 품목이 삭제됩니다.)");
-        System.out.printf("1. %-8s 2. %s%n", "주문취소", "메뉴판");
-        String input = sc.next();
-        if ("1".equals(input)) {
-            System.out.println("주문을 취소합니다. 메인 메뉴로 돌아갑니다. \n" );
-            cart.clearCart();
-        } else if ("2".equals(input)) {
-            System.out.println("메뉴판으로 돌아갑니다.");
-        } else {
-            throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
         }
     }
 }
