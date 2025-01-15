@@ -23,14 +23,7 @@ public class Cart {
 
     // 장바구니 삭제
     private boolean removeItem(String name) {
-        Optional<MenuItem> target = cartItems.keySet().stream()
-                .filter(item -> item.getName().equals(name)) // 이름이 동일한 menuItem 필터링
-                .findFirst();// Optional<MenuItem>: 조건에 맞는 대상 발견 시 Optional.of() 없으면 .empty()
-
-        target.ifPresent(cartItems::remove); // 값이 있으면 삭제
-
-        return target.isPresent();
-//        cartItems.keySet().removeIf(item -> item.getName().equals(name));
+        return cartItems.keySet().removeIf(item -> item.getName().equals(name));
     }
 
     // 장바구니 출력
