@@ -3,6 +3,7 @@ package level6;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
 import static level6.UserType.*;
@@ -18,6 +19,18 @@ public class Cart {
         } else {
             cartItems.put(item, 1);
         }
+    }
+
+    // 장바구니 삭제
+    private boolean removeItem(String name) {
+        Optional<MenuItem> target = cartItems.keySet().stream()
+                .filter(item -> item.getName().equals(name)) // 이름이 동일한 menuItem 필터링
+                .findFirst();// Optional<MenuItem>: 조건에 맞는 대상 발견 시 Optional.of() 없으면 .empty()
+
+        target.ifPresent(cartItems::remove); // 값이 있으면 삭제
+
+        return target.isPresent();
+//        cartItems.keySet().removeIf(item -> item.getName().equals(name));
     }
 
     // 장바구니 출력
@@ -81,6 +94,7 @@ public class Cart {
         }
     }
 
+    // 사용자 유형에 맞는 할인율 적용하여 총 금액 계산
     private BigDecimal selectDiscount(BigDecimal totalPrice) {
         Scanner sc = new Scanner(System.in);
         System.out.println("\n할인 정보를 입력해주세요.");
@@ -102,7 +116,7 @@ public class Cart {
     // 장바구니 진행 주문 취소
     public void cancel() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("진행중인 주문을 취소하시겠습니까? (장바구니의 모든 품목이 삭제됩니다.)");
+        System.out.println("\n진행중인 주문을 취소하시겠습니까? (장바구니의 모든 품목이 삭제됩니다.)");
         System.out.printf("1. %-8s 2. %s%n", "주문취소", "메뉴판");
         String input = sc.next();
         if ("1".equals(input)) {
@@ -110,6 +124,34 @@ public class Cart {
             clearCart();
         } else if ("2".equals(input)) {
             System.out.println("메뉴판으로 돌아갑니다.");
+        } else {
+            throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
+        }
+    }
+
+    // 장바구니 특정 메뉴 삭제
+    public void remove() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n[ Orders ]");
+        printCart();
+
+        System.out.println("\n장바구니 목록 중 특정 메뉴를 삭제하시겠습니까?");
+        System.out.printf("1. %-8s 2. %s%n", "메뉴 삭제", "메뉴판");
+        String input = sc.next();
+        if ("1".equals(input)) {
+            filterByName(sc);
+        } else if ("2".equals(input)) {
+            System.out.println("메뉴판으로 돌아갑니다.");
+        } else {
+            throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
+        }
+    }
+
+    private void filterByName(Scanner sc) {
+        System.out.println("삭제할 메뉴를 입력하세요");
+        String input = sc.next();
+        if (removeItem(input)) {
+            System.out.println("해당 메뉴가 삭제되었습니다.");
         } else {
             throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
         }
