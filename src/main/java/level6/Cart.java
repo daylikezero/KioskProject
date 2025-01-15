@@ -1,14 +1,13 @@
 package level6;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Cart {
     // menuItem(메뉴명, 가격정보)과 수량을 저장
-    final Map<MenuItem, Integer> cartItems = new HashMap<>();
+    final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();
 
     // 장바구니 담기
     public void addItem(MenuItem item) {
@@ -21,16 +20,10 @@ public class Cart {
 
     // 장바구니 출력
     private void printCart() {
-        // 주문 목록 출력 시 메뉴명 오름차순 정렬
-        List<Map.Entry<MenuItem, Integer>> entryList = cartItems.entrySet()
-                .stream()
-                .sorted(Map.Entry.<MenuItem, Integer>comparingByKey())
-                .toList();
-
-        for (Map.Entry<MenuItem, Integer> entry : entryList) {
+        for (Map.Entry<MenuItem, Integer> entry : cartItems.entrySet()) {
             MenuItem item = entry.getKey();
             String name = item.getName();
-            double price = entry.getValue() * item.getPrice();
+            BigDecimal price = BigDecimal.valueOf(entry.getValue() * item.getPrice());
             String description = item.getDescription();
             System.out.printf("%-21s | W %.1f | %s%n", name, price, description);
         }
