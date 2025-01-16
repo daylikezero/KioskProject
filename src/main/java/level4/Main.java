@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-        // Menu 객체 생성하면서 카테고리 이름 설정
+        // Menu 객체 생성을 통해 이름 설정 -> 카테고리 이름 설정
         Menu menu1 = new Menu("Buggers");
         Menu menu2 = new Menu("Drinks");
         Menu menu3 = new Menu("Desserts");

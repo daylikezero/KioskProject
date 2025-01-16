@@ -3,7 +3,6 @@ package level6;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Scanner;
 
 import static level6.UserType.*;
@@ -27,7 +26,7 @@ public class Cart {
     }
 
     // 장바구니 출력
-    private void printCart() {
+    public void printCart() {
         // Map의 경우 stream을 사용하지 않고 Map.forEach((K,V))로 entry를 순회할 수 있다.
         cartItems.forEach((key, value) -> System.out.printf("%-21s | W %4.1f | %s%n",
                 key.getName(),
@@ -56,7 +55,7 @@ public class Cart {
     public void confirmAdd(String input, MenuItem item) {
         if ("1".equals(input)) {
             addItem(item);
-            System.out.println(item.getName() + " 이 장바구니에 추가되었습니다.\n");
+            System.out.println(item.getName() + " 이 장바구니에 추가되었습니다.");
         } else if ("2".equals(input)) {
             System.out.println("이전 메뉴로 돌아갑니다.");
         } else {
@@ -65,7 +64,7 @@ public class Cart {
     }
 
     // 장바구니 주문
-    public void orders() {
+    public void payOrders() {
         Scanner sc = new Scanner(System.in);
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println("\n[ Orders ]");
@@ -107,7 +106,7 @@ public class Cart {
     }
 
     // 장바구니 진행 주문 취소
-    public void cancel() {
+    public void cancelOrders() {
         Scanner sc = new Scanner(System.in);
         System.out.println("\n진행중인 주문을 취소하시겠습니까? (장바구니의 모든 품목이 삭제됩니다.)");
         System.out.printf("1. %-8s 2. %s%n", "주문취소", "메뉴판");
@@ -123,7 +122,7 @@ public class Cart {
     }
 
     // 장바구니 특정 메뉴 삭제
-    public void remove() {
+    public void removeOrders() {
         Scanner sc = new Scanner(System.in);
         System.out.println("\n[ Orders ]");
         printCart();
@@ -132,19 +131,16 @@ public class Cart {
         System.out.printf("1. %-8s 2. %s%n", "메뉴 삭제", "메뉴판");
         String input = sc.next();
         if ("1".equals(input)) {
-            filterByName(sc);
+            System.out.println("삭제할 메뉴를 입력하세요");
+            String name = sc.next();
+            if (removeItem(name)) {
+                // 입력받은 메뉴명 조회 및 삭제
+                System.out.println("해당 메뉴가 삭제되었습니다.");
+            } else {
+                throw new IllegalStateException("유효하지 않은 입력입니다. : " + name);
+            }
         } else if ("2".equals(input)) {
             System.out.println("메뉴판으로 돌아갑니다.");
-        } else {
-            throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
-        }
-    }
-
-    private void filterByName(Scanner sc) {
-        System.out.println("삭제할 메뉴를 입력하세요");
-        String input = sc.next();
-        if (removeItem(input)) {
-            System.out.println("해당 메뉴가 삭제되었습니다.");
         } else {
             throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
         }
