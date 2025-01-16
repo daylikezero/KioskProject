@@ -65,22 +65,18 @@ public class Kiosk {
     // 하위 메뉴
     private void selectMenu(Menu menu) {
         Scanner sc = new Scanner(System.in);
-        while (true) {
-            try {
-                // Menu가 가진 List<MenuItem>을 반복문을 활용하여 메뉴 출력
-                menu.printSub();
-                // 숫자 입력 받기
-                // 입력 받은 숫자가 올바르다면 인덱스로 활용해서 Menu가 가지고 있는 List<MenuItem>에 접근하기
-                if (menu.selectItem(sc.next())) {
-                    return; // 선택 반환값 true: 반복문 종료
-                }
-            } catch (IllegalStateException e) {
-                // 유효하지 않은 입력에 대해 오류메세지를 출력합니다.
-                System.out.println("[입력 오류] " + e.getMessage());
-            } catch (Exception e) {
-                System.out.println("[알 수 없는 오류] " + e.getMessage());
-                e.printStackTrace(System.out);
-            }
+        try {
+            // Menu가 가진 List<MenuItem>을 반복문을 활용하여 메뉴 출력
+            menu.printSub();
+            // 숫자 입력 받기
+            // 입력 받은 숫자가 올바르다면 인덱스로 활용해서 Menu가 가지고 있는 List<MenuItem>에 접근하기
+            menu.selectItem(sc.next());
+        } catch (IllegalStateException e) {
+            // 유효하지 않은 입력에 대해 오류메세지를 출력합니다.
+            System.out.println("[입력 오류] " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("[알 수 없는 오류] " + e.getMessage());
+            e.printStackTrace(System.out);
         }
     }
 }

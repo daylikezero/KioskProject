@@ -11,12 +11,13 @@ import java.util.List;
 public class Menu {
     // MenuItem 클래스를 List로 관리
     private final List<MenuItem> menuItems = new ArrayList<>();
-    private final String categoryName;
+    private final String categoryName; // 카테고리 이름
 
     public Menu(String categoryName) {
         this.categoryName = categoryName;
     }
 
+    // menuItems 에 MenuItem 값 할당
     public void setMenuItems(MenuItem... menuItem) {
         this.menuItems.addAll(Arrays.asList(menuItem));
     }
@@ -26,6 +27,7 @@ public class Menu {
         return categoryName;
     }
 
+    // 선택한 메뉴 정보 출력
     public void printItem(MenuItem menuItem) {
         System.out.println("선택한 메뉴: " + menuItem);
     }

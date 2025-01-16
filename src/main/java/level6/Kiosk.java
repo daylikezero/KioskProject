@@ -38,9 +38,9 @@ public class Kiosk {
     // 상위 메뉴 출력 메서드
     private void printMain(Cart cart) {
         if (!cart.isEmpty()) {
-            System.out.println("\n아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n");
+            System.out.println("\n아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.");
         }
-        System.out.println("[ MAIN MENU ]");
+        System.out.println("\n[ MAIN MENU ]");
         for (int i = 0; i < menuList.size(); i++) {
             System.out.println(i + 1 + ". " + menuList.get(i).getCategoryName());
         }
@@ -83,15 +83,15 @@ public class Kiosk {
                 case "2" -> menu = menuList.get(1);
                 case "3" -> menu = menuList.get(2);
                 case "4" -> {
-                    cart.orders();
+                    cart.payOrders();
                     return;
                 }
                 case "5" -> {
-                    cart.cancel();
+                    cart.cancelOrders();
                     return;
                 }
                 case "6" -> {
-                    cart.remove();
+                    cart.removeOrders();
                     return;
                 }
                 default -> throw new IllegalStateException("유효하지 않은 입력입니다. : " + menuIndex);
@@ -111,8 +111,13 @@ public class Kiosk {
                 // 입력 받은 숫자가 올바르다면 인덱스로 활용해서 Menu가 가지고 있는 List<MenuItem>에 접근하기
                 Optional<MenuItem> selectItem = menu.selectItem(sc.next());
                 if (selectItem.isEmpty()) {
-                    return;
+                    // 0을 입력하여 selectItem이 없는 경우
+                    return; // 뒤로 가기 -> 상위 메뉴로 이동
                 }
+                // 선택한 메뉴를 장바구니에 담을지 확인
+                System.out.println("\n-------------[ Cart ]-----------");
+                cart.printCart();
+                System.out.println("--------------------------------");
                 System.out.printf("%n%s%n", selectItem.get());
                 System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
                 System.out.printf("1. %-8s 2. %s%n", "확인", "취소");

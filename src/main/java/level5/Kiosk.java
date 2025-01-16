@@ -60,6 +60,8 @@ public class Kiosk {
     // 하위 메뉴
     private void selectMenu(Menu menu) {
         Scanner sc = new Scanner(System.in);
+        // ref1: 0을 입력하여 '뒤로가기' 한 경우에만 상위메뉴로 이동
+        // 메뉴를 선택하거나, 입력 오류가 발생한 경우 해당 메뉴 반복 출력
         while (true) {
             try {
                 // Menu가 가진 List<MenuItem>을 반복문을 활용하여 메뉴 출력
