@@ -115,7 +115,7 @@ public class Kiosk {
                     return; // 뒤로 가기 -> 상위 메뉴로 이동
                 }
                 // 선택한 메뉴를 장바구니에 담을지 확인
-                System.out.println("\n-------------[ Cart ]-----------");
+                System.out.println("\n------------[ Cart ]------------");
                 cart.printCart();
                 System.out.println("--------------------------------");
                 System.out.printf("%n%s%n", selectItem.get());

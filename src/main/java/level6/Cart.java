@@ -22,7 +22,8 @@ public class Cart {
 
     // 장바구니 삭제
     private boolean removeItem(String name) {
-        return cartItems.keySet().removeIf(item -> item.getName().equals(name));
+        // 입력값 대소문자 구분 없이 비교
+        return cartItems.keySet().removeIf(item -> item.getName().equalsIgnoreCase(name));
     }
 
     // 장바구니 출력
