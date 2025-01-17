@@ -5,8 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import static level6.UserType.*;
-
 public class Cart {
     // menuItem(메뉴명, 가격정보)과 수량을 저장
     final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();
@@ -78,7 +76,7 @@ public class Cart {
         String input = sc.next();
         if ("1".equals(input)) {
             BigDecimal discountPrice = selectDiscount(getTotalPrice());
-            System.out.println("주문이 완료되었습니다. 금액은 W " + discountPrice + " 입니다. \n");
+            System.out.println("주문이 완료되었습니다. 금액은 W " + discountPrice + " 입니다.");
             clearCart();
         } else if ("2".equals(input)) {
             System.out.println("메뉴판으로 돌아갑니다.");
@@ -96,14 +94,7 @@ public class Cart {
                     , UserType.values()[i].getDefinition()
                     , UserType.values()[i].getDiscountPercent());
         }
-        String input = sc.next();
-        return switch (input) {
-            case "1" -> VETERAN.discount(totalPrice);
-            case "2" -> SOLDIER.discount(totalPrice);
-            case "3" -> STUDENT.discount(totalPrice);
-            case "4" -> COMMON.discount(totalPrice);
-            default -> throw new IllegalStateException("유효하지 않은 입력입니다. : " + input);
-        };
+        return UserType.getUserType(sc.next()).discount(totalPrice);
     }
 
     // 장바구니 진행 주문 취소
