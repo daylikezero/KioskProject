@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Cart {
     // menuItem(메뉴명, 가격정보)과 수량을 저장
-    final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();
+    private final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();
 
     // 장바구니 담기
     private void addItem(MenuItem item) {
