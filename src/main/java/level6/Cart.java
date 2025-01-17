@@ -10,7 +10,7 @@ public class Cart {
     final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();
 
     // 장바구니 담기
-    public void addItem(MenuItem item) {
+    private void addItem(MenuItem item) {
         if (cartItems.containsKey(item)) {
             cartItems.put(item, cartItems.get(item) + 1);
         } else {

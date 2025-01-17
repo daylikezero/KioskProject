@@ -28,11 +28,6 @@ public class Menu {
         return categoryName;
     }
 
-    // 선택한 메뉴 정보 출력
-    public void printItem(MenuItem menuItem) {
-        System.out.println("선택한 메뉴: " + menuItem);
-    }
-
     // 하위 메뉴 출력 메서드
     public void printSub() {
         System.out.println("\n[ " + categoryName.toUpperCase() + " MENU ]");
@@ -50,7 +45,7 @@ public class Menu {
         try {
             for (int i = 0; i < menuItems.size(); i++) {
                 if (i == Integer.parseInt(itemIndex) - 1) {
-                    printItem(menuItems.get(i));
+                    System.out.println("선택한 메뉴: " + menuItems.get(i));
                     return Optional.of(menuItems.get(i));
                 }
             }
