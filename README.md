@@ -42,3 +42,4 @@
 - [TIL_2025-01-14_BigDecimal](https://velog.io/@daylikezero/TIL-2025-01-14)
 - [TIL_2025-01-15_LinkedHashMap](https://velog.io/@daylikezero/TIL-2025-01-15)
 - [TIL_2025-01-16_키오스크6](https://velog.io/@daylikezero/TIL-2025-01-16)
+- [TIL_2025-01-17_키오스크_리펙토링](https://velog.io/@daylikezero/TIL-2025-01-17)
