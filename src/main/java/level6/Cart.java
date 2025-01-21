@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Cart {
     // menuItem(메뉴명, 가격정보)과 수량을 저장
     private final Map<MenuItem, Integer> cartItems = new LinkedHashMap<>();
+    private final Scanner sc = new Scanner(System.in);
 
     // 장바구니 담기
     private void addItem(MenuItem item) {
@@ -64,7 +65,6 @@ public class Cart {
 
     // 장바구니 주문
     public void payOrders() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("아래와 같이 주문하시겠습니까?");
         System.out.println("\n[ Orders ]");
         printCart();
@@ -87,7 +87,6 @@ public class Cart {
 
     // 사용자 유형에 맞는 할인율 적용하여 총 금액 계산
     private BigDecimal selectDiscount(BigDecimal totalPrice) {
-        Scanner sc = new Scanner(System.in);
         System.out.println("\n할인 정보를 입력해주세요.");
         for (int i = 0; i < UserType.values().length; i++) {
             System.out.printf(i + 1 + ". %-6s : %3d%%%n"
@@ -99,7 +98,6 @@ public class Cart {
 
     // 장바구니 진행 주문 취소
     public void cancelOrders() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("\n진행중인 주문을 취소하시겠습니까? (장바구니의 모든 품목이 삭제됩니다.)");
         System.out.printf("1. %-8s 2. %s%n", "주문취소", "메뉴판");
         String input = sc.next();
@@ -115,7 +113,6 @@ public class Cart {
 
     // 장바구니 특정 메뉴 삭제
     public void removeOrders() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("\n[ Orders ]");
         printCart();
 
