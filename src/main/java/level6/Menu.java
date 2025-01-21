@@ -1,7 +1,5 @@
 package level6;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,17 +9,14 @@ import java.util.Optional;
  */
 public class Menu {
     // MenuItem 클래스를 List로 관리
-    private final List<MenuItem> menuItems = new ArrayList<>();
     private final String categoryName; // 카테고리 이름
+    private final List<MenuItem> menuItems;
 
-    public Menu(String categoryName) {
+    public Menu(String categoryName, List<MenuItem> menuItems) {
         this.categoryName = categoryName;
+        this.menuItems = menuItems;
     }
 
-    // menuItems 에 MenuItem 값 할당
-    public void setMenuItems(MenuItem... menuItem) {
-        this.menuItems.addAll(Arrays.asList(menuItem));
-    }
 
     // 메뉴 카테고리 이름을 반환하는 메서드
     public String getCategoryName() {

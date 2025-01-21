@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Kiosk {
     private final List<Menu> menuList;
+    private final Scanner sc = new Scanner(System.in); // 스캐너 선언
 
     public Kiosk(List<Menu> menuList) {
         this.menuList = menuList;
@@ -13,8 +14,6 @@ public class Kiosk {
 
     // 상위 메뉴
     public void start() {
-        // 스캐너 선언
-        Scanner sc = new Scanner(System.in);
         Cart cart = new Cart();
         // 반복문 시작
         while (true) {
@@ -102,7 +101,6 @@ public class Kiosk {
 
     // 하위 메뉴
     private void selectMenu(Menu menu, Cart cart) {
-        Scanner sc = new Scanner(System.in);
         while (true) {
             try {
                 // Menu가 가진 List<MenuItem>을 반복문을 활용하여 메뉴 출력
